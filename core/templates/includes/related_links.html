@@ -1,0 +1,10 @@
+{% if related_links %}
+<div class="bs-callout bs-callout-warning rlink" id="callout-helper-context-color-specificity" style="padding: 0.625rem">
+    <h4>Enlaces relacionados: </h4>
+    <ul>
+        {% for related_link in related_links %}
+        <li><a href="{{ related_link.link }}">{{ related_link.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

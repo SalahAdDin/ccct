@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load static core_tags %}
+
+{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
+
+{% block carousel %}
+{% news_listing_homepage %}
+{% endblock %}
+
+{% block heading %}
+<div class="common-headers" style="display: none;">
+    <h2>{{ self.title }}</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+{% include "includes/body.html" with body=self.body only %}
+
+{% person_listing_homepage %}
+
+{% blog_listing_homepage %}
+
+{% endblock %}
+
+{% block sidemenu %}
+{% our_affiliates %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'ccct/js/bootstrap/carousel.js' %}"></script>
+{% endblock %}

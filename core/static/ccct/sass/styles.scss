@@ -1,0 +1,1107 @@
+@charset "utf-8";
+
+/*
+Haber
+
+Web: http:
+Author: José Luis Sandoval Alaguna
+E-Mail: alagunasalahaddin@live.com
+Versión: 1.0
+Fecha: 19/12/2014
+*/
+@import "compass";
+@import "bootstrap-compass";
+@import "bootstrap-variables";
+@import "bootstrap";
+
+html {
+  font-size: 16px;
+}
+
+body {
+  @include background(url('../images/background.jpg') repeat center);
+}
+
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+$base-size: 16;
+
+@mixin rem($property, $values) {
+  $px: ();
+  $rem: ();
+
+  @each $value in $values {
+    @if $value == 0 or $value == auto {
+      $px: append($px, $value);
+      $rem: append($rem, $value);
+    } @else {
+      $unit: unit($value);
+      $val: parseInt($value);
+
+      @if $unit == "px" {
+        $px: append($px, $value);
+        $rem: append($rem, ($val / $base-size + rem));
+      }
+
+      @if $unit == "rem" {
+        $px: append($px, ($val * $base-size + px));
+        $rem: append($rem, $value);
+      }
+    }
+  }
+
+  @if $px == $rem {
+    #{$property}: $px;
+  } @else {
+    #{$property}: $px;
+    #{$property}: $rem;
+  }
+}
+
+$icon-font-moon-path: if($bootstrap-sass-asset-helper, "icomoon/", "../fonts/icomoon/") !default;
+$icon-font-moon-name: "icomoon" !default;
+$icon-font-moon-svg-id: "icomoon" !default;
+
+//colors
+$color_guardsman_red_approx: #bd040c;
+$color_guardsman_red_approx_mid: rgba(189, 4, 12, 0.5);
+$black_30: rgba(0, 0, 0, 0.3);
+$black_10: rgba(0, 0, 0, 0.1);
+$black_60: rgba(0, 0, 0, 0.6);
+$black_80: rgba(0, 0, 0, 0.8);
+
+//lines
+$gray-line: 1px solid #C6D0DA;
+$gray-line-3: 1px dotted #C6D0DA;
+$red-line: 1px dotted #BE040F;
+$white-line: 2px solid white;
+$white-line-2: 1px solid white;
+$white-line-3: 1px dotted white;
+
+//aux
+.bgray {
+  border-right: $gray-line;
+}
+
+//@extend-elements
+//original selectors
+//.effect7:before, .effect7:after
+%extend_1 {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: 0 0 1.250rem $black_80;
+  top: 0;
+  bottom: 0;
+  @include rem(left, 10px);
+  //left: 10px;
+  @include rem(right, 10px);
+  //right: 10px;
+  //Instead of the line below you could use @includeborder-radius($radius, $vertical-radius)
+  border-radius: 6.250rem / 0.625rem;
+}
+
+.effect {
+  position: relative;
+  //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: 0 0.0625rem 0.25rem $black_30; //, 0 0 2.5rem $black_10 inset;
+  &:before {
+    @extend %extend_1;
+  }
+  &:after {
+    @extend %extend_1;
+    right: 0.625rem;
+    left: auto;
+    //Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: skew(8deg) rotate(3deg);
+  }
+}
+
+//fonts
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'IcoMoon';
+  src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-moon-path}#{$icon-font-moon-name}.eot'), '#{$icon-font-moon-path}#{$icon-font-moon-name}.eot'));
+  src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-moon-path}#{$icon-font-moon-name}.eot?#iefix'), '#{$icon-font-moon-path}#{$icon-font-moon-name}.eot?#iefix')) format('embedded-opentype'),
+  url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-moon-path}#{$icon-font-moon-name}.woff'), '#{$icon-font-moon-path}#{$icon-font-moon-name}.woff')) format('woff'),
+  url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-moon-path}#{$icon-font-moon-name}.ttf'), '#{$icon-font-moon-path}#{$icon-font-moon-name}.ttf')) format('truetype'),
+  url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-moon-path}#{$icon-font-moon-name}.svg##{$icon-font-moon-svg-id}'), '#{$icon-font-moon-path}#{$icon-font-moon-name}.svg##{$icon-font-moon-svg-id}')) format('svg');
+}
+
+$font_0: Tahoma;
+$font_1: sans-serif;
+$font_2: 'IcoMoon';
+
+//Icons
+.icomoon {
+  &::before {
+    display: inline-block;
+    @include rem(width, 30px);
+    //width: 30px;
+    text-align: center;
+    text-transform: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-family: $font_2;
+    line-height: 1;
+    speak: none;
+  }
+  span {
+    width: 0;
+    height: 0;
+    display: block;
+    overflow: hidden;
+  }
+}
+
+.icomoon-tiempoturco {
+  &:before {
+    content: "\e600";
+  }
+}
+
+.icomoon-home {
+  &:before {
+    content: "\e601";
+  }
+}
+
+.icomoon-office {
+  &:before {
+    content: "\e602";
+  }
+}
+
+.icomoon-quill {
+  &:before {
+    content: "\e603";
+  }
+}
+
+.icomoon-droplet {
+  &:before {
+    content: "\e65d";
+  }
+}
+
+.icomoon-image {
+  &:before {
+    content: "\e604";
+  }
+}
+
+.icomoon-camera {
+  &:before {
+    content: "\e605";
+  }
+}
+
+.icomoon-music {
+  &:before {
+    content: "\e606";
+  }
+}
+
+.icomoon-headphones {
+  &:before {
+    content: "\e607";
+  }
+}
+
+.icomoon-film {
+  &:before {
+    content: "\e608";
+  }
+}
+
+.icomoon-bullhorn {
+  &:before {
+    content: "\e609";
+  }
+}
+
+.icomoon-feed2 {
+  &:before {
+    content: "\e60a";
+  }
+}
+
+.icomoon-book {
+  &:before {
+    content: "\e60b";
+  }
+}
+
+.icomoon-books {
+  &:before {
+    content: "\e60c";
+  }
+}
+
+.icomoon-profile {
+  &:before {
+    content: "\e60e";
+  }
+}
+
+.icomoon-file {
+  &:before {
+    content: "\e60d";
+  }
+}
+
+.icomoon-folder-open {
+  &:before {
+    content: "\e674";
+  }
+}
+
+.icomoon-tag {
+  &:before {
+    content: "\e60f";
+  }
+}
+
+.icomoon-cart {
+  &:before {
+    content: "\e610";
+  }
+}
+
+.icomoon-coin {
+  &:before {
+    content: "\e611";
+  }
+}
+
+.icomoon-credit {
+  &:before {
+    content: "\e612";
+  }
+}
+
+.icomoon-location {
+  &:before {
+    content: "\e613";
+  }
+}
+
+.icomoon-location2 {
+  &:before {
+    content: "\e614";
+  }
+}
+
+.icomoon-compass {
+  &:before {
+    content: "\e615";
+  }
+}
+
+.icomoon-map {
+  &:before {
+    content: "\e616";
+  }
+}
+
+.icomoon-alarm {
+  &:before {
+    content: "\e617";
+  }
+}
+
+.icomoon-stopwatch {
+  &:before {
+    content: "\e618";
+  }
+}
+
+.icomoon-calendar {
+  &:before {
+    content: "\e619";
+  }
+}
+
+.icomoon-mobile {
+  &:before {
+    content: "\e61a";
+  }
+}
+
+.icomoon-mobile2 {
+  &:before {
+    content: "\e61b";
+  }
+}
+
+.icomoon-cabinet {
+  &:before {
+    content: "\e61c";
+  }
+}
+
+.icomoon-drawer {
+  &:before {
+    content: "\e61d";
+  }
+}
+
+.icomoon-download {
+  &:before {
+    content: "\e61e";
+  }
+}
+
+.icomoon-upload {
+  &:before {
+    content: "\e61f";
+  }
+}
+
+.icomoon-storage {
+  &:before {
+    content: "\e620";
+  }
+}
+
+.icomoon-bubble {
+  &:before {
+    content: "\e621";
+  }
+}
+
+.icomoon-bubbles {
+  &:before {
+    content: "\e622";
+  }
+}
+
+.icomoon-user {
+  &:before {
+    content: "\e623";
+  }
+}
+
+.icomoon-users {
+  &:before {
+    content: "\e624";
+  }
+}
+
+.icomoon-spinner {
+  &:before {
+    content: "\e625";
+  }
+}
+
+.icomoon-spinner2 {
+  &:before {
+    content: "\e626";
+  }
+}
+
+.icomoon-spinner3 {
+  &:before {
+    content: "\e627";
+  }
+}
+
+.icomoon-search {
+  &:before {
+    content: "\e628";
+  }
+}
+
+.icomoon-key {
+  &:before {
+    content: "\e62b";
+  }
+}
+
+.icomoon-lock {
+  &:before {
+    content: "\e62c";
+  }
+}
+
+.icomoon-unlocked {
+  &:before {
+    content: "\e62d";
+  }
+}
+
+.icomoon-wrench {
+  &:before {
+    content: "\e62e";
+  }
+}
+
+.icomoon-cogs {
+  &:before {
+    content: "\e629";
+  }
+}
+
+.icomoon-hammer {
+  &:before {
+    content: "\e62f";
+  }
+}
+
+.icomoon-pie {
+  &:before {
+    content: "\e630";
+  }
+}
+
+.icomoon-stats {
+  &:before {
+    content: "\e631";
+  }
+}
+
+.icomoon-bars {
+  &:before {
+    content: "\e632";
+  }
+}
+
+.icomoon-bars2 {
+  &:before {
+    content: "\e633";
+  }
+}
+
+.icomoon-leaf {
+  &:before {
+    content: "\e62a";
+  }
+}
+
+.icomoon-meter2 {
+  &:before {
+    content: "\e634";
+  }
+}
+
+.icomoon-lab {
+  &:before {
+    content: "\e636";
+  }
+}
+
+.icomoon-remove {
+  &:before {
+    content: "\e637";
+  }
+}
+
+.icomoon-road {
+  &:before {
+    content: "\e638";
+  }
+}
+
+.icomoon-accessibility {
+  &:before {
+    content: "\e63b";
+  }
+}
+
+.icomoon-target {
+  &:before {
+    content: "\e639";
+  }
+}
+
+.icomoon-switch {
+  &:before {
+    content: "\e63a";
+  }
+}
+
+.icomoon-list {
+  &:before {
+    content: "\e63c";
+  }
+}
+
+.icomoon-list2 {
+  &:before {
+    content: "\e63d";
+  }
+}
+
+.icomoon-numbered-list {
+  &:before {
+    content: "\e63e";
+  }
+}
+
+.icomoon-menu {
+  &:before {
+    content: "\e63f";
+  }
+}
+
+.icomoon-menu2 {
+  &:before {
+    content: "\e640";
+  }
+}
+
+.icomoon-tree {
+  &:before {
+    content: "\e635";
+  }
+}
+
+.icomoon-globe {
+  &:before {
+    content: "\e675";
+  }
+}
+
+.icomoon-earth {
+  &:before {
+    content: "\e641";
+  }
+}
+
+.icomoon-link {
+  &:before {
+    content: "\e642";
+  }
+}
+
+.icomoon-flag {
+  &:before {
+    content: "\e676";
+  }
+}
+
+.icomoon-attachment {
+  &:before {
+    content: "\e643";
+  }
+}
+
+.icomoon-eye {
+  &:before {
+    content: "\e644";
+  }
+}
+
+.icomoon-eye-blocked {
+  &:before {
+    content: "\e645";
+  }
+}
+
+.icomoon-bookmark {
+  &:before {
+    content: "\e646";
+  }
+}
+
+.icomoon-bookmarks {
+  &:before {
+    content: "\e647";
+  }
+}
+
+.icomoon-star {
+  &:before {
+    content: "\e648";
+  }
+}
+
+.icomoon-heart {
+  &:before {
+    content: "\e649";
+  }
+}
+
+.icomoon-notification {
+  &:before {
+    content: "\e64a";
+  }
+}
+
+.icomoon-question {
+  &:before {
+    content: "\e64b";
+  }
+}
+
+.icomoon-cancel-circle {
+  &:before {
+    content: "\e64d";
+  }
+}
+
+.icomoon-checkmark-circle {
+  &:before {
+    content: "\e64e";
+  }
+}
+
+.icomoon-play {
+  &:before {
+    content: "\e677";
+  }
+}
+
+.icomoon-play2 {
+  &:before {
+    content: "\e678";
+  }
+}
+
+.icomoon-checkbox-checked {
+  &:before {
+    content: "\e64c";
+  }
+}
+
+.icomoon-checkbox-unchecked {
+  &:before {
+    content: "\e64f";
+  }
+}
+
+.icomoon-radio-checked {
+  &:before {
+    content: "\e650";
+  }
+}
+
+.icomoon-radio-unchecked {
+  &:before {
+    content: "\e651";
+  }
+}
+
+.icomoon-filter {
+  &:before {
+    content: "\e652";
+  }
+}
+
+.icomoon-bold {
+  &:before {
+    content: "\e653";
+  }
+}
+
+.icomoon-underline {
+  &:before {
+    content: "\e654";
+  }
+}
+
+.icomoon-italic {
+  &:before {
+    content: "\e655";
+  }
+}
+
+.icomoon-newtab {
+  &:before {
+    content: "\e65e";
+  }
+}
+
+.icomoon-embed {
+  &:before {
+    content: "\e65f";
+  }
+}
+
+.icomoon-code {
+  &:before {
+    content: "\e660";
+  }
+}
+
+.icomoon-mail {
+  &:before {
+    content: "\e656";
+  }
+}
+
+.icomoon-googleplus {
+  &:before {
+    content: "\e657";
+  }
+}
+
+.icomoon-facebook {
+  &:before {
+    content: "\e658";
+  }
+}
+
+.icomoon-instagram {
+  &:before {
+    content: "\e659";
+  }
+}
+
+.icomoon-twitter {
+  &:before {
+    content: "\e65a";
+  }
+}
+
+.icomoon-feed {
+  &:before {
+    content: "\e661";
+  }
+}
+
+.icomoon-youtube {
+  &:before {
+    content: "\e65b";
+  }
+}
+
+.icomoon-vimeo {
+  &:before {
+    content: "\e65c";
+  }
+}
+
+.icomoon-tumblr {
+  &:before {
+    content: "\e662";
+  }
+}
+
+.icomoon-reddit {
+  &:before {
+    content: "\e663";
+  }
+}
+
+.icomoon-pinterest {
+  &:before {
+    content: "\e664";
+  }
+}
+
+.icomoon-file-pdf {
+  &:before {
+    content: "\e665";
+  }
+}
+
+.icomoon-file-word {
+  &:before {
+    content: "\e666";
+  }
+}
+
+.icomoon-file-excel {
+  &:before {
+    content: "\e667";
+  }
+}
+
+.icomoon-file-zip {
+  &:before {
+    content: "\e668";
+  }
+}
+
+.icomoon-file-powerpoint {
+  &:before {
+    content: "\e669";
+  }
+}
+
+.icomoon-file-xml {
+  &:before {
+    content: "\e66a";
+  }
+}
+
+.icomoon-file-css {
+  &:before {
+    content: "\e66b";
+  }
+}
+
+.icomoon-html5 {
+  &:before {
+    content: "\e66c";
+  }
+}
+
+.icomoon-css3 {
+  &:before {
+    content: "\e66d";
+  }
+}
+
+.icomoon-chrome {
+  &:before {
+    content: "\e66e";
+  }
+}
+
+.icomoon-firefox {
+  &:before {
+    content: "\e66f";
+  }
+}
+
+.icomoon-IE {
+  &:before {
+    content: "\e670";
+  }
+}
+
+.icomoon-opera {
+  &:before {
+    content: "\e671";
+  }
+}
+
+.icomoon-safari {
+  &:before {
+    content: "\e672";
+  }
+}
+
+.icomoon-IcoMoon {
+  &:before {
+    content: "\e673";
+  }
+}
+
+//content
+.max-width {
+  @include rem(max-width, 1200px);
+  //max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  @include background(url('../images/istanbulc.jpg') repeat-x center right);
+  > :nth-child(2) {
+    @include rem(margin-right, 0);
+    @include rem(margin-left, 0);
+  }
+  .aux-options {
+    @include rem(padding, 15px 0);
+    a {
+      color: #000000;
+    }
+    .icomoon {
+      @include rem(font-size, 25px);
+
+    }
+    .icomoon-search {
+      z-index: 10;
+      position: absolute;
+      @include rem(top, 5px);
+      //top: 2px;
+      @include rem(left, 20px);
+      //left: 20px;
+      @include rem(font-size, 20px);
+    }
+    input[type="text"] {
+      z-index: 1;
+      border-radius: 0.3125rem 0 0 0.3125rem;
+      border: 1px solid darkgray;
+      @include rem(padding-left, 35px);
+      @include rem(font-size, 20px);
+      line-height: 1.5;
+      &:focus {
+        border: 1px solid $color_guardsman_red_approx;
+      }
+    }
+    .btn-danger {
+      border-radius: 0 0.3125rem 0.3125rem 0;
+    }
+  }
+  .navbar {
+    margin-bottom: 0;
+    background: $color_guardsman_red_approx_mid;
+    //background-color: rgb(189, 4, 12, 0.5);
+    //opacity: 0.5;
+    a {
+      color: #ffffff;
+      &:hover {
+        background-color: $black_60;
+      }
+    }
+    .navbar-nav {
+      width: 80%;
+    }
+    .nav {
+      > li:last-child {
+        float: right;
+      }
+      .open {
+        > a {
+          &:hover, &:focus {
+            background-color: $black_60;
+          }
+        }
+        .dropdown-menu {
+          a {
+            color: #000000;
+            &:hover {
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+  .navbar-brand {
+    > img {
+      @include rem(margin-top, -80px);
+      @include rem(width, 170px);
+      position: relative;
+      z-index: 10;
+    }
+  }
+  .language-chooser {
+    a {
+      display: inline-block;
+      @include rem(padding-left, 4px);
+      @include rem(padding-right, 4px);
+    }
+  }
+  .time-zone {
+    @include rem(margin-top, -10px);
+    div {
+      padding: 0;
+    }
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+      @include rem(margin-right, 5px);
+    }
+    h5 {
+      color: #666666;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      @include rem(letter-spacing, 1px);
+      //letter-spacing: 1px;
+      line-height: 1rem;
+      @include rem(margin-top, 5px);
+      //margin-top: 5px;
+      margin-bottom: 0;
+      font-weight: bolder;
+    }
+    time {
+      color: #999999;
+      font-size: 0.7rem;
+      float: left;
+    }
+  }
+}
+
+main {
+  @include rem(margin-top, 10px);
+  > :nth-child(2) {
+    background: #ffffff;
+  }
+  .carousel {
+    a {
+      color: lightgray;
+      &:hover {
+        color: whitesmoke;
+        text-decoration: none;
+      }
+    }
+    img {
+      margin: 0 auto;
+    }
+    &.fade {
+      opacity: 1;
+    }
+  }
+  .events-header {
+    a {
+      float: right;
+    }
+  }
+  .content {
+    @include rem(margin, 15px 0);
+    @include rem(padding-left, 20px);
+    .common-headers {
+      time {
+        float: right;
+        @include rem(font-size, 20px);
+      }
+      a {
+        float: right;
+      }
+    }
+    .list-group-item {
+      clear: both;
+      width: 100%;
+      overflow: hidden;
+      .list-group-item-text {
+        margin-top: 1%;
+        img {
+          float: left;
+          margin-right: 2%;
+          margin-bottom: 1%;
+        }
+      }
+    }
+    .center-block {
+      img {
+        float: left;
+        margin-right: 2%;
+        margin-bottom: 1%;
+      }
+    }
+  }
+  .side{
+    .carousel{
+      @include rem(margin, 10px 0);
+      .carousel-control{
+        background: none;
+      }
+      .carousel-indicators{
+        bottom: 0;
+        li{
+          border: 1px solid #373b3d;
+        }
+        .active{
+          background: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+}
+
+footer {
+  background: #252525;
+  color: #d3d3d3;
+  @include rem(padding, 10px 0);
+  div {
+    > .row {
+      @include rem(margin, 0 15px);
+    }
+  }
+  a {
+    color: #d3d3d3;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{# Individual new item in a list - used on blog index and home page #}
+<div class="item {% if forloop.parentloop.first %}active{% endif %}">
+    {# Carousel image - first store image as a variable in order to construct an image tag with a title applied (title is used by bxslider js to construct the caption) #}
+    {% image carousel_item.image width-1000 as imagedata %}
+    <img src="{{ imagedata.url }}" width="{{ imagedata.width }}"
+         height="{{ imagedata.height }}" alt="{{ imagedata.alt }}"
+         title="{{ carousel_item.caption }}"/>
+    <div class="carousel-caption">
+        <h4>{{ new.title }}</h4>
+        <p>{{ carousel_item.caption }}</p>
+        <a href="{% pageurl new %}">Leer más...</a>
+    </div>
+</div>

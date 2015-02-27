@@ -1,0 +1,38 @@
+{% load core_tags wagtailcore_tags %}
+{% get_site_root as site_root %}
+{% load static from staticfiles %}
+
+{# Implementation of bootstrap theme dropdown menu - shows top level links and their children #}
+<div role="navigation" class="navbar">
+    <div class="container max-width">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Cambiar Menú</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {# Link to home page #}
+            <a href="{% pageurl site_root %}" class="navbar-brand"><img src="{% static 'ccct/images/Logo_CCCT2.jpg' %}" class="img-thumbnail"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                {% for menuitem in menuitems %}
+                    <li class="{% if menuitem.show_dropdown %}dropdown{% endif %}{% if calling_page.url == menuitem.url %} active{% endif %}">
+                        {% if menuitem.show_dropdown %}
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ menuitem.title }} <b class="caret"></b></a>
+                            {% top_menu_children parent=menuitem %}
+                        {% else %}
+                            <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
+                        {% endif %}
+                    </li>       
+                {% endfor %}
+                <li class="language-chooser">
+                    <a>TR</a>
+                    <a>ES</a>
+                    <a>EN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

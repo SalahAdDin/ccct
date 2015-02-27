@@ -1,0 +1,12 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="item {% if forloop.parentloop.first %}active{% endif %}">
+    {% image affiliation.affiliates.logo width-200 as imagedata %}
+    <img src="{{ imagedata.url }}" width="{{ imagedata.width }}"
+         height="{{ imagedata.height }}" alt="{{ imagedata.alt }}"
+         title="{{ affiliation.affiliates.name }}"/>
+    <div class="carousel-caption">
+        <!--<h4>{{ affiliation.affiliates.name }}</h4>
+        <a href="">Leer más...</a>-->
+    </div>
+</div>

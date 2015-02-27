@@ -1,0 +1,5 @@
+<form action="{% url 'wagtailsearch_search' %}" method="get">
+    <a class="icomoon icomoon-search"><span>Busca y encontrarás!</span></a>
+    <input type="text" name="q"{% if query_string %} value="{{ query_string }}"{% endif %} class="col-xs-12 col-sm-6 col-md-9" placeholder="Palabras aqui...">
+    <input type="submit" class="btn btn-danger" value="Buscar">
+</form>

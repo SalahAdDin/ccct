@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block carousel %}
+    {% include "includes/carousel.html" with carousel_items=self.carousel_items.all only %}
+{% endblock %}
+
+
+{% if self.date %}
+    {% block heading %}
+        <div class="common-headers">
+            <h2>{{ self.title }} <span>{{ self.date|date:"j F Y" }}</span></h2>
+        </div>
+    {% endblock %}
+{% endif %}
+
+{% block content %}
+
+    {% include "includes/body.html" with body=self.body only %}
+
+    {% with self.tags.all as tags %}
+        {% if tags %}
+        <div class="bs-callout bs-callout-info tags" id="callout-helper-context-color-specificity" style="padding: 0.625rem">
+            <h4>Etiquetas:</h4>
+            {% for tag in tags %}
+                <a href="{% pageurl self.blog_index %}?tag={{ tag }}"><button class="btn btn-primary" type="button">{{ tag }}</button></a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {% include "includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}

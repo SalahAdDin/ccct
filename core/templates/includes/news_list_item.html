@@ -1,0 +1,16 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<a class="list-group-item" href="{% pageurl new %}">
+    <span class="badge">{{ new.date|date:"j F Y" }}</span>
+    <h4 class="list-group-item-heading">{{ new.title }}</h4>
+    {% if new.search_description or new.feed_image %}
+    <p class="list-group-item-text">
+        {% if new.feed_image %}
+        {% image new.feed_image width-200 %}
+        {% endif %}
+        {% if new.search_description %}
+        {{ new.search_description }}
+        {% endif %}
+    </p>
+    {% endif %}
+</a>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+{% include "includes/intro.html" with intro=self.intro only %}
+
+<div class="default-form">
+    <form action="{% pageurl self %}" method="POST" class="form-horizontal">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-default center-block" type="submit" name="Enviar">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block carousel %}
+    {% include "includes/carousel.html" with carousel_items=self.carousel_items.all only %}
+{% endblock %}
+
+{% if self.date %}
+    {% block heading %}
+        <div class="common-headers">
+            <h2>{{ self.title }} <time datetime="{{ self.date|date:"j F Y" }}">{{ self.date|date:"j F Y" }}</time></h2>
+        </div>
+    {% endblock %}
+{% endif %}
+
+{% block content %}
+    {% include "includes/intro.html" with intro=self.intro only %}
+
+    {% include "includes/body.html" with body=self.body only %}
+
+    {% include "includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags core_tags %}
+
+{% block content %}
+    {% include "includes/intro.html" with intro=self.intro only %}
+
+    {# Listing created with a tag - allows filtering by whether the page is live #}
+    {# See also the blog index or events index where the listing is created from a method defined in models.py #}
+    {# news_index_listing calling_page=self #}
+
+    <div class="list-group">
+        {# Uses serve method defined in models.py - allows for paging if required #}
+        {# See also standard index for creating a listing with a tag #}
+        {% for new in news %}
+            {% include "includes/news_list_item.html" %}
+        {% empty %}
+            No se encontraron Noticias!
+        {% endfor %}
+    </div>
+
+    {# Pagination - uses django.core.paginator #}
+    {# Append any other url query string variables to the next and previous links - allows tag to be passed through #}
+    <nav class="row">
+      <ul class="pager">
+          {% if news.has_previous %}
+          <li class="previous"><a href="?page={{ news.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+          {% else %}
+          <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+          {% endif %}
+          <li><span>Página {{ news.number }} de {{ news.paginator.num_pages }}.</span></li>
+          {% if news.has_next %}
+          <li class="next"><a href="?page={{ news.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Siguiente<span aria-hidden="true">&rarr;</span></a></li>
+          {% else %}
+          <li class="next disabled"><a href="#">Siguiente<span aria-hidden="true">&rarr;</span></a></li>
+          {% endif %}
+      </ul>
+    </nav>
+
+    {% include "includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}

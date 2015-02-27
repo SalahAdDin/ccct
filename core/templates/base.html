@@ -1,0 +1,139 @@
+{% load compress static wagtailuserbar %}
+{% load i18n %}
+{% load tz %}
+{% load static from staticfiles %}
+{% load core_tags wagtailcore_tags cache %}
+{% get_site_root as site_root %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head lang="es">
+    <meta charset="utf-8"/>
+    <!--
+    Desarrollado por Barakat Studios - SalahAdDin
+    =============================================
+
+    This website is powered by BootStrap / SASS - making wep developt and desing more easy!
+    -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock%}
+        {% block title_suffix %}{% endblock %}</title>
+    <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% endif %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script src="{% static 'ccct/js/modernizr/modernizr.js' %}"></script>
+
+    {% compress css %}
+
+    <!-- link rel="stylesheet" type="text/x-scss" href="{% static 'ccct/sass/styles.scss' %}" -->
+    <link rel="stylesheet" href="{% static 'ccct/stylesheets/docs.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'ccct/stylesheets/styles.css' %}"/>
+    {% endcompress %}
+
+
+    {% block extra_css %}
+
+    {% endblock %}
+    <!--<link rel="icon" href="{% static 'ccct/images/favicon.ico' %}" type="image/x-icon; charset=binary"/> -->
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+{% wagtailuserbar %}
+<header class="effect">
+    <div class="row max-width aux-options">
+        <div class="col-md-2 col-md-offset-3 time-zone">
+            <div class="col-md-6">
+                <h5><a class="glyphicon glyphicon-time"></a>Bogotá</h5>
+                <time datetime="{{ local|timezone:'America/Bogota'|timezone:'America/Bogota'|date:'j \d\e F \d\e Y' }} de {{ local|timezone:'America/Bogota'|time:'H:i' }}" pubdate>{{ local|timezone:"America/Bogota"|date:"j \d\e F" }} - {{ local|timezone:"America/Bogota"|time:"H:i" }}</time>
+            </div>
+            <div class="col-md-6">
+                <h5><a class="glyphicon glyphicon-time"></a>Istanbul</h5>
+                <time datetime="{{ local|timezone:'Europe/Istanbul'|timezone:'Europe/Paris'|date:'j \d\e F \d\e Y' }} de {{ local|timezone:'Europe/Istanbul'|time:'H:i' }}" pubdate>{{ local|timezone:"Europe/Istanbul"|date:"j \d\e F" }} - {{ local|timezone:"Europe/Istanbul"|time:"H:i" }}</time>
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-1">
+            <a class="icomoon icomoon-googleplus" href="https://plus.google.com/"></a>
+            <a class="icomoon icomoon-facebook" href="https://www.facebook.com/"></a>
+            <a class="icomoon icomoon-twitter" href="https://twitter.com/"></a>
+            <a class="icomoon icomoon-feed" href=""></a>
+            <a class="icomoon icomoon-youtube" href="https://www.youtube.com/user/"></a>
+        </div>
+        <div class="col-md-4">
+            {% block search_box %}
+            {% include "includes/search_box.html" only %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="row">
+        {% block menu %}
+        {% get_site_root as site_root %}
+        {% top_menu parent=site_root calling_page=self %}
+        {% endblock %}
+    </div>
+</header>
+<main>
+    <div class="up row max-width">
+        {% block carousel %}{% endblock %}
+    </div>
+    <div class="row max-width">
+        <div class="col-xs-12 col-sm-6 col-md-8 content">
+            {% block heading %}
+                <div class="common-headers">
+                    <h2>{{ self.title }}</h2>
+                </div>
+            {% endblock %}
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="col-xs-6 col-md-4 side">
+            {% block sidemenu %}
+                {% secondary_menu calling_page=self %}
+            {% endblock %}
+            {% block events %}
+            {% event_listing_homepage %}
+            {% endblock %}
+            {% block adverts %}
+            {# Uses a snippet - allows adverts to appear on every page #}
+            {% adverts %}
+            {% endblock %}
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="row max-width">
+        <div class="col-md-4">
+            <div class="row">Cámara de Comercio Colombo Turca.</div>
+            <div class="row">&copy; 2015. Todos los derechos reservados.</div>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+            Desarrollado por BarakatStudios con<a class="icomoon icomoon-html5"></a><a class="icomoon icomoon-css3"></a>
+        </div>
+    </div>
+</footer>
+<!-- <script src="{% static 'ccct/bower_components/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'ccct/bower_components/foundation/js/foundation.min.js' %}"></script> -->
+{% compress js %}
+<script src="{% static 'ccct/js/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'ccct/js/bootstrap/dropdown.js' %}"></script>
+<script src="{% static 'ccct/js/bootstrap/carousel.js' %}"></script>
+<script src="{% static 'ccct/js/ccct.js' %}"></script>
+{% endcompress %}
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+        $('.carousel').carousel({
+            interval: 2000
+        });
+    });
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
